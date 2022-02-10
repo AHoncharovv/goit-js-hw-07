@@ -23,16 +23,20 @@ function createGalleryMarkup(items) {
 createGalleryMarkup(galleryItems);
 
 galleryContainer.addEventListener("click", event => {
-    event.preventDefault();
     const currentElement = event.target;
-    const currentValue = event.currentTarget;
-    
-
-    if (!currentElement) return;
+    event.preventDefault();
+    if (currentElement.nodeName !== "IMG") {
+        return
+    };
      
     // заменяет ссылку на картинку при клике
-    currentElement.src = currentElement.dataset.source
+    currentElement.src = currentElement.dataset.source;
 
-    console.log(currentElement);
-   
+    
+    const instance = basicLightbox.create(`
+    <img src="${currentElement.src}" width=100% height=100%>
+    `)
+    galleryContainer.innerHTML = "";
+    instance.show()
 });
+
